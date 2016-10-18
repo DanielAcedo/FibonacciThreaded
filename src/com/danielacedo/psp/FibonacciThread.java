@@ -1,5 +1,11 @@
 package com.danielacedo.psp;
 
+/**
+ * 
+ * MultiThreaded implementation for calculating numbers in the Fibonacci Sequence
+ * @author Daniel Acedo Calderón
+ *
+ */
 public class FibonacciThread implements Runnable{
 	 
 	private Thread myThread;
@@ -25,6 +31,12 @@ public class FibonacciThread implements Runnable{
 		System.out.println("Thread is finishing");
 	}
 	
+	/**
+	 * Calculates a number from the Fibonacci sequence given the index
+	 * @param n Index in the sequence
+	 * @return Value in the sequence from the given index
+	 * @author Daniel Acedo Calderón
+	 */
 	private long fib(int n){
 		long result = 0;
 		long oldResult = 0;
