@@ -1,16 +1,21 @@
-package com.danielacedo.hellothread;
+package com.danielacedo.psp;
 
 
-class HelloThread extends Thread{
+class FibonacciThread implements Runnable{
 	 
+	private Thread myThread;
 	private int nFibs;
 	
-	public HelloThread(int nFibs){
+	public FibonacciThread(int nFibs){
+		myThread = new Thread(this, "Fibonnaci Thread");
 		System.out.println("Creado hilo");
 		this.nFibs = nFibs;
 	}
 	
-	@Override
+	public void start(){
+		myThread.start();
+	}
+	
 	public void run(){
 		System.out.println("Hola desde hilo creado");
 		
@@ -42,7 +47,6 @@ class HelloThread extends Thread{
 				aux = resultado;
 				resultado = aux + resultadoAnterior;
 				resultadoAnterior = aux;
-				
 			}
 			
 		}
@@ -51,10 +55,10 @@ class HelloThread extends Thread{
 	}
 }
 
-public class RunThread {
+public class FibonacciThreadTest {
 	
 	public static void main(String[] args) {
-		new HelloThread(70).start();
+		new FibonacciThread(10).start();
 		System.out.println("Hola desde hilo principal");
 		
 		System.out.println("Proceso acabando");
