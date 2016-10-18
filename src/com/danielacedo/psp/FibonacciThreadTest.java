@@ -8,7 +8,7 @@ class FibonacciThread implements Runnable{
 	
 	public FibonacciThread(int nFibs){
 		myThread = new Thread(this, "Fibonnaci Thread");
-		System.out.println("Creado hilo");
+		System.out.println("Thread created");
 		this.nFibs = nFibs;
 	}
 	
@@ -17,41 +17,41 @@ class FibonacciThread implements Runnable{
 	}
 	
 	public void run(){
-		System.out.println("Hola desde hilo creado");
+		System.out.println("Hello from the created thread");
 		
 		for(int i = 0; i<=nFibs; i++){
 			System.out.println("Fib("+i+"): "+fib(i));
 		}
 		
-		System.out.println("Hilo finalizando");
+		System.out.println("Thread is finishing");
 	}
 	
 	private long fib(int n){
-		long resultado = 0;
-		long resultadoAnterior = 0;
+		long result = 0;
+		long oldResult = 0;
 		
 		for(int i = 0; i<= n; i++){
 			if(i==0){
-				resultado = 0;
+				result = 0;
 			}
 			else if(i==1){
-				resultado = 1;
-				resultadoAnterior = 0;
+				result = 1;
+				oldResult = 0;
 			}
 			else if(i==2){
-				resultado = 1;
-				resultadoAnterior = 1;
+				result = 1;
+				oldResult = 1;
 			}
 			else{
 				long aux;
-				aux = resultado;
-				resultado = aux + resultadoAnterior;
-				resultadoAnterior = aux;
+				aux = result;
+				result = aux + oldResult;
+				oldResult = aux;
 			}
 			
 		}
 		
-		return resultado;
+		return result;
 	}
 }
 
@@ -59,9 +59,9 @@ public class FibonacciThreadTest {
 	
 	public static void main(String[] args) {
 		new FibonacciThread(10).start();
-		System.out.println("Hola desde hilo principal");
+		System.out.println("Hello from the main thread");
 		
-		System.out.println("Proceso acabando");
+		System.out.println("Process is finishing");
 
 	}
 
