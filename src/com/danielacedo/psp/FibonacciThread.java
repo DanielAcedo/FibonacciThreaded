@@ -9,12 +9,13 @@ package com.danielacedo.psp;
 public class FibonacciThread implements Runnable{
 	 
 	private Thread myThread;
-	private int nFibs;
+	private FibonacciDirector director;
+	private boolean even; //If true, calculates the even index. Otherwise it will calculate the odd ones
 	
-	public FibonacciThread(int nFibs){
+	public FibonacciThread(FibonacciDirector director, boolean even){
 		myThread = new Thread(this, "Fibonnaci Thread");
-		System.out.println("Thread created");
-		this.nFibs = nFibs;
+		this.even = even;
+		this.director = director;
 	}
 	
 	public void start(){
@@ -22,13 +23,23 @@ public class FibonacciThread implements Runnable{
 	}
 	
 	public void run(){
-		System.out.println("Hello from the created thread");
-		
-		for(int i = 0; i<=nFibs; i++){
-			System.out.println("Fib("+i+"): "+fib(i));
+		for(int i = 1; i<director.getnFibs(); i++){
+			if(even && i%2==0){
+				director.getFibCollection()[i] = fib(i);
+			}
+			else if((!even) && i%2!=0){
+				director.getFibCollection()[i] = fib(i);
+			}
+			
 		}
-		
-		System.out.println("Thread is finishing");
+	}
+	
+	public void join(){
+		try {
+			this.myThread.join();
+		} catch (InterruptedException e) {
+			System.err.println("Thread failed to join");
+		}
 	}
 	
 	/**
@@ -38,28 +49,17 @@ public class FibonacciThread implements Runnable{
 	 * @author Daniel Acedo Calderón
 	 */
 	private long fib(int n){
-		long result = 0;
 		long oldResult = 0;
+		long result = 1;
 		
-		for(int i = 0; i<= n; i++){
-			if(i==0){
-				result = 0;
-			}
-			else if(i==1){
-				result = 1;
-				oldResult = 0;
-			}
-			else if(i==2){
-				result = 1;
-				oldResult = 1;
-			}
-			else{
-				long aux;
-				aux = result;
-				result = aux + oldResult;
-				oldResult = aux;
-			}
-			
+		if(n == 0){
+			result = 0;
+		}
+		
+		for(int i = 2; i<= n; i++){
+			long aux = result;
+			result = result + oldResult;
+			oldResult = aux;
 		}
 		
 		return result;
